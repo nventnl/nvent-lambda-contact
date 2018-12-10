@@ -1,0 +1,24 @@
+pipeline:
+  build:
+    image: node:10.13.0-alpine
+    commands:
+      - apk update && apk add zip
+      - mkdir dist
+      - cp index.js dist/
+      - cd dist
+      - zip -r -9 ../contact.zip *
+
+  s3-publish:
+    image: plugins/s3
+    acl: private
+    region: eu-west-1
+    bucket: build.artefacts.nvent.nl
+    source: contact.zip
+
+  deploy-lambda:
+    image: acazacu/drone-plugin-lambda
+    pull: true
+    region: eu-west-1
+    function_name: nventWebContact
+    s3_bucket: build.artefacts.nvent.nl
+    file_name: contact.zip

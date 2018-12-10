@@ -1,0 +1,22 @@
+{
+  "name": "nvent-lambda-contact",
+  "version": "0.0.1",
+  "description": "The lambda function that handles the contact form endpoint",
+  "main": "index.js",
+  "scripts": {
+    "test": "test:unit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nventnl/nvent-lambda-contact.git"
+  },
+  "author": "Alex Cazacu (https://nvent.nl)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nventnl/nvent-lambda-contact/issues"
+  },
+  "homepage": "https://github.com/nventnl/nvent-lambda-contact#readme",
+  "dependencies": {
+    "aws-sdk": "^2.373.0"
+  }
+}
