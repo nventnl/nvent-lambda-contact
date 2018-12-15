@@ -33,6 +33,10 @@ exports.handler = (event, context, callback) => {
 
     SES.sendEmail(email)
         .promise()
-        .then(data => callback(data))
-        .catch(error => callback(error));
+        .then(data => {
+            callback(null, data)
+        })
+        .catch(error => {
+            callback(error)
+        });
 };
