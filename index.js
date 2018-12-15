@@ -3,10 +3,13 @@ const SES = new AWS.SES({
     region: process.env.AWS_REGION
 });
 
-exports.handler = async ({ subject, from, message }) => {
-    const email = {
+const Source = process.env.EMAIL_SOURCE;
+const To = process.env.EMAIL_DESTINATION;
+
+function genEmail({ subject = '', from, message }) {
+    return {
         Destination: {
-            ToAddresses: [ process.env.EMAIL_DESTINATION ]
+            ToAddresses: [ To ]
         },
         Message: {
             Body: {
@@ -17,19 +20,19 @@ exports.handler = async ({ subject, from, message }) => {
             },
             Subject: {
                 Charset: 'UTF-8',
-                Data: subject || ""
+                Data: subject
             }
         },
         ReplyToAddresses: [ from ] ,
-        Source: process.env.EMAIL_SOURCE
+        Source
     };
-    try {
-        const response = await SES
-            .sendEmail()
-            .promise();
+}
 
-        return response;
-    } catch (error) {
-        throw new Error('Body must start with "Hello "');
-    }
+exports.handler = (event, context, callback) => {
+    const email = genEmail(event);
+
+    SES.sendEmail(email)
+        .promise()
+        .then(data => callback(data))
+        .catch(error => callback(error));
 };
