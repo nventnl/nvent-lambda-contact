@@ -37,6 +37,7 @@ exports.handler = (event, context, callback) => {
             callback(null, data)
         })
         .catch(error => {
+            console.log(error, 'iz error');
             callback(error)
         });
 };
