@@ -31,6 +31,8 @@ function genEmail({ subject = '', from, message }) {
 exports.handler = (event, context, callback) => {
     const email = genEmail(event);
 
+    console.log(`Source: ${Source}; To: ${To}`);
+
     SES.sendEmail(email)
         .promise()
         .then(data => {
