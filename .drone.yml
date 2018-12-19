@@ -45,14 +45,14 @@ pipeline:
       - cd dist
       - zip -r -9 ../contact.zip *
 
-  s3-publish:
+  publish:
     image: plugins/s3
     acl: private
     region: eu-west-1
     bucket: build.artefacts.nvent.nl
     source: contact.zip
 
-  deploy-lambda:
+  update:
     image: acazacu/drone-plugin-lambda
     pull: true
     region: eu-west-1
